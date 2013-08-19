@@ -8,6 +8,8 @@ class Scotch5 < Formula
 
   depends_on :mpi => :cc
 
+  keg_only "Conflicts with scotch (6.x)"
+
   def patches
     # bugs in makefile:
     # - libptesmumps must be built before main_esmumps
@@ -26,9 +28,6 @@ class Scotch5 < Formula
         s.change_make_var! 'CCD', ENV['MPICC']
         s.gsub! '-O3', '-O3 -fPIC'
       end
-
-      # fix bug in Makefile
-      #inreplace 'esmumps/Makefile', 'libesmumps$(LIB)', 'lib$(ESMUMPSLIB)$(LIB)'
 
       system 'make', 'scotch'
       system 'make', 'ptscotch'
